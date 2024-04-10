@@ -1,26 +1,37 @@
 import {StyleSheet, Text, View, Pressable, Image, Platform} from 'react-native';
 import React from 'react';
+import {useNavigation} from '@react-navigation/native';
+import MealsDetails from '../components/MealsDeatils';
 
 export default function MealItems({
+  id,
   title,
   imageUrl,
   duration,
   complexity,
   affordability,
+  method,
 }) {
+  const navigation = useNavigation();
+  function redirectionHandler() {
+    navigation.navigate('MealsDetailScreen', {
+      mealId: id,
+    });
+  }
+
   return (
     <View style={styles.mealItem}>
-      <Pressable android_ripple={{color: 'grey'}}>
+      <Pressable android_ripple={{color: 'grey'}} onPress={redirectionHandler}>
         <View>
           <View>
             <Image source={{uri: imageUrl}} style={styles.image} />
             <Text style={styles.title}>{title}</Text>
           </View>
-        </View>
-        <View style={styles.detials}>
-          <Text style={styles.detailItem}>{duration}m</Text>
-          <Text style={styles.detailItem}>{complexity.toUpperCase()}</Text>
-          <Text style={styles.detailItem}>{affordability.toUpperCase()}</Text>
+          <MealsDetails
+            duration={duration}
+            affordability={affordability}
+            complexity={complexity}
+          />
         </View>
       </Pressable>
     </View>
