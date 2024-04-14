@@ -1,0 +1,25 @@
+import {StyleSheet, Text, View} from 'react-native';
+import React from 'react';
+
+export default function Subtitle({children}) {
+  return (
+    <View style={styles.subContainer}>
+      <Text style={styles.subtitle}>{children}</Text>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  subtitle: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  subContainer: {
+    borderColor: 'white',
+    borderBottomWidth: 2,
+    marginHorizontal: 12,
+    padding: 6,
+  },
+});
