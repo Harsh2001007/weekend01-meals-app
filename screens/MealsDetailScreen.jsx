@@ -1,13 +1,40 @@
-import {StyleSheet, Text, View, Image, ScrollView} from 'react-native';
-import React from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ScrollView,
+  Button,
+  Pressable,
+} from 'react-native';
+import React, {useLayoutEffect} from 'react';
 import {MEALS} from '../data/dummy-data';
 import MealsDeatils from '../components/MealsDeatils';
 import Subtitle from '../components/MealDetail/Subtitle';
 import List from '../components/MealDetail/List';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-export default function MealsDetailScreen({route}) {
+export default function MealsDetailScreen({route, navigation}) {
   const mealId = route.params.mealId;
   const selectedMeal = MEALS.find(meal => meal.id === mealId);
+
+  const headerAddBtn = () => {
+    console.log('added to favorite');
+  };
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => {
+        return (
+          <Pressable
+            onPress={headerAddBtn}
+            style={({pressed}) => pressed && styles.applyStyle}>
+            <FontAwesome name={'bookmark-o'} size={28} color={'white'} />
+          </Pressable>
+        );
+      },
+    });
+  }, [navigation, headerAddBtn]);
+
   return (
     <ScrollView>
       <Image source={{uri: selectedMeal.imageUrl}} style={styles.image} />
@@ -24,6 +51,14 @@ export default function MealsDetailScreen({route}) {
           <List data={selectedMeal.ingredients} />
           <Subtitle>Steps</Subtitle>
           <List data={selectedMeal.steps} />
+        </View>
+        <View style={{marginBottom: 30}}>
+          <Button
+            title="Click me"
+            onPress={() => {
+              navigation.navigate('DrawerScreen');
+            }}
+          />
         </View>
       </View>
     </ScrollView>
@@ -44,5 +79,9 @@ const styles = StyleSheet.create({
   },
   textDiff: {
     color: 'white',
+  },
+  applyStyle: {
+    opacity: 0.5,
+    marginRight: 10,
   },
 });
