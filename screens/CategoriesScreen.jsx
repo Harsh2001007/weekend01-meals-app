@@ -24,6 +24,8 @@ export default function CategoriesScreen({navigation}) {
       keyExtractor={item => item.id}
       renderItem={renderItem}
       numColumns={2}
+      showsVerticalScrollIndicator={false}
+      showsHorizontalScrollIndicator={false}
     />
   );
 }
